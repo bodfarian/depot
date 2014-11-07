@@ -29,6 +29,17 @@ class ProductTest < ActiveSupport::TestCase
     assert product.valid?
   end
 
+  test "product title must be at least 10 characters long" do
+    product = Product.new(description: "yyy",
+                            image_url: "zzz.jpg",
+                            price: 33)
+    product.title = "a" * 9
+    assert product.invalid?
+
+    product.title = "a" * 10
+    assert product.valid?, "Title must be at least 10 characters long"
+end
+
   def new_product(image_url)
     product = Product.new(title:        "My Book Title",
                           description:  "yyy",
