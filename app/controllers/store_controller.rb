@@ -7,7 +7,22 @@
 # Visit http://www.pragmaticprogrammer.com/titles/rails4 for more book information.
 #---
 class StoreController < ApplicationController
+
+  def visit_incrementer
+    if session[:counter].nil?
+      session[:counter] = 0
+    end
+    session[:counter] +=1
+  end
+
   def index
     @products = Product.order(:title)
+    @visits = visit_incrementer
+    if @visits > 5
+    @visit_message = "You've been to this page #{@visits} #{"time".pluralize(@visits)}."
+    else
+    @visit_message = ""
+    end
   end
+
 end
