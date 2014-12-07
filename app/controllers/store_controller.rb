@@ -19,7 +19,12 @@ class StoreController < ApplicationController
   end
 
   def index
-    @products = Product.order(:title)
+    if params[:set_locale]
+      redirect_to store_url(locale: params[:set_locale])
+    else
+      @products = Product.order(:title)
+    end
+    
     @visits = visit_incrementer
     if @visits > 5
     @visit_message = "You've been to this page #{@visits} #{"time".pluralize(@visits)}."
